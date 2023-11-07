@@ -1,4 +1,72 @@
-
+//
+// import 'package:flutter/material.dart';
+//
+// class HomeScreen extends StatefulWidget {
+//   const HomeScreen({Key? key});
+//
+//   @override
+//   _HomeScreenState createState() => _HomeScreenState();
+// }
+//
+// class _HomeScreenState extends State<HomeScreen> {
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+// title: Text('Selection Screen'),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: [
+//
+//             Expanded(
+//               flex: 70,
+//               child: ListView.builder(
+//                   itemCount: 5,
+//                   itemBuilder: (context,index){
+//                     return Padding(
+//                       padding: const EdgeInsets.all(8.0),
+//                       child: ListTile(
+//                         tileColor: Colors.grey.shade200,
+//                         title:Text('Item.[index]),
+//                         onPress: (){
+//                           showDialog(
+//                               context: context, builder:(context){
+//                             return AlertDialog(
+//                               title: Text('Selected Item',style:TextStyle(fontWeight: FontWeight.bold),),
+//                               actions: [
+//                                 Row(
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: [
+//
+//                                            child: Text('Close'),
+//                                                       style:ElevatedButton.styleFrom(
+//                                                           backgroundColor: Colors.red
+//                                                       ),
+//                                                     ),
+//                                                   ),
+//                                                 ],
+//                                               ),
+//                                             );
+//                                           }
+//                                           );
+//                                         },
+//                                         child:Text('Edit',style:TextStyle(color: Colors.lightBlue),)
+//                                     ),
+//
+//                                   ],
+//                                 )
+//                               ],
+//                             );
+//                           }
+//                           );
+//                         },
+//   }
+// }
+//
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,167 +77,72 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Todo>todo=[];
-  TextEditingController fild1=TextEditingController();
-  TextEditingController fild2=TextEditingController();
-  TextEditingController todoTEController1=TextEditingController();
-  TextEditingController todoTEController2=TextEditingController();
+  List<bool> selectedItems = [false, false, false, false, false];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        actions: [
-          Icon(Icons.search),
-        ],
+        title: Text('Selection Screen'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            TextFormField(
-              controller: fild1,
-              decoration: InputDecoration(
-                hintText: 'Title',
-                border:OutlineInputBorder(),
-              ),),
-            SizedBox(height: 8,),
-            TextFormField(
-              controller: fild2,
-              decoration: InputDecoration(
-                hintText: 'Description',
-                border:OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 8,),
-            ElevatedButton(onPressed:(){
-              String str1=fild1.text.trim();
-              String str2=fild2.text.trim();
-              Todo todoo=Todo(str1,str2);
-              todo.add(todoo);
-              fild1.text='';
-              fild2.text='';
-              setState(() {});
-            },
-              child:Text('Add',style: TextStyle(fontWeight: FontWeight.bold),),
-              style:ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red
-              ),
-            ),
-            SizedBox(height: 30,),
             Expanded(
               flex: 70,
               child: ListView.builder(
-                  itemCount: todo.length,
-                  itemBuilder: (context,index){
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        tileColor: Colors.grey.shade200,
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.red,
-                        ),
-                        title:Text(todo[index].name),
-                        subtitle:Text(todo[index].description),
-                        trailing: Icon(Icons.arrow_forward),
-                        onLongPress: (){
-                          showDialog(
-                              context: context, builder:(context){
-                            return AlertDialog(
-                              title: Text('Alert',style:TextStyle(fontWeight: FontWeight.bold),),
-                              actions: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    TextButton(
-                                        onPressed:(){
-                                          Navigator.pop(context);
-                                          showModalBottomSheet(
-                                              context: context, builder:(context){
-                                            return Padding(
-                                              padding: const EdgeInsets.all(16.0),
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  TextFormField(
-                                                    controller: todoTEController1,
-                                                    decoration: InputDecoration(
-                                                      hintText: 'Enter you new to do',
-                                                      border: OutlineInputBorder(),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  TextFormField(
-                                                    controller: todoTEController2,
-                                                    decoration: InputDecoration(
-                                                      hintText: 'Enter your description',
-                                                      border: OutlineInputBorder(),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 10,),
-                                                  SizedBox(
-                                                    height: 45,
-                                                    child: ElevatedButton(onPressed: () {
-                                                      Navigator.pop(context);
-                                                      String str3=todoTEController1.text.trim();
-                                                      String str4=todoTEController2.text.trim();
-                                                      todo[index].name=str3;
-                                                      todo[index].description=str4;
-                                                      todoTEController2.text='';
-                                                      todoTEController1.text='';
-                                                      setState(() {});
-                                                    }, child: Text('Edit Done'),
-                                                      style:ElevatedButton.styleFrom(
-                                                          backgroundColor: Colors.red
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          }
-                                          );
-                                        },
-                                        child:Text('Edit',style:TextStyle(color: Colors.lightBlue),)
-                                    ),
-                                    TextButton(
-                                        onPressed:(){
-                                          Navigator.pop(context);
-                                          todo.removeAt(index);
-                                          setState(() {});
-                                        },
-                                        child:Text('Delet',style:TextStyle(color: Colors.lightBlue),)
-                                    ),
-                                  ],
-                                )
-                              ],
-                            );
-                          }
-                          );
-                        },
-                      ),
-                    );
-                  }
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      tileColor: selectedItems[index] ? Colors.green : Colors.grey.shade200,
+                      title: Text('Item.$index'),
+                      onTap: () {
+                        setState(() {
+                          selectedItems[index] = !selectedItems[index];
+                        });
+                      },
+                      trailing: selectedItems[index] ? Text('Selected', style: TextStyle(color: Colors.green)) : null,
+                    ),
+                  );
+                },
               ),
             ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          int selectedCount = selectedItems.where((isSelected) => isSelected).length;
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text('Number of Selected Items: $selectedCount',),
+                title: Text('Selected Item',style: TextStyle(fontWeight: FontWeight.bold) ),
+                actions: [
+
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                    ),
+                    child: Text('Close'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Icon(Icons.check),
+      ),
     );
   }
 }
-class Todo{
-  String name;
-  String description;
-  Todo(
-      this.name,
-      this.description,
-      );
-}
+
+// }
